@@ -251,7 +251,11 @@ function Build-CoverageReport {
         }
     Write-ActionInfo "Code coverage report path $script:coverage_report_path"
     if (Test-Path $script:coverage_report_path) {
-        & "$PSScriptRoot/jacoco-report/embedmissedlines.ps1" -mdFile $script:coverage_report_path -sourcePath $script:coverage_paths
+        # Pester adds the source directory to the file name, so we need to remove it so it isnt duplicated
+        $sourcePath = (Get-Item $script:coverage_paths).Parent
+        
+        Write-ActionInfo "Sending source path as $sourcePath"
+        & "$PSScriptRoot/jacoco-report/embedmissedlines.ps1" -mdFile $script:coverage_report_path -sourcePath $sourcePath
     } else {
         Write-ActionWarning "Could not find Code coverage report path $script:coverage_report_path"
     }
