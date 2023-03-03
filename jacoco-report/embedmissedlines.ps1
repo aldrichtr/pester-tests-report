@@ -33,6 +33,7 @@ foreach ($line in $mdData) {
             $outputData += "``````"
         } else {
             Write-ActionInfo "Could not find $filePath in $env:GITHUB_WORKSPACE"
+        }
     }
     else {
         $outputData += $line
