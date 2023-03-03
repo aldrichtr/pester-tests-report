@@ -254,6 +254,7 @@ function Build-CoverageReport {
         & "$PSScriptRoot/jacoco-report/embedmissedlines.ps1" -mdFile $script:coverage_report_path
     } else {
         Write-ActionWarning "Could not find Code coverage report path $script:coverage_report_path"
+    }
 }
 
 function Publish-ToCheckRun {
