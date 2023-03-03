@@ -142,6 +142,7 @@ else {
     $pesterConfig.TestResult.Enabled = $true
     $pesterConfig.TestResult.OutputPath = $test_results_path
 
+    Write-ActionOutput "Code Coverage Output Path $test_results_path"
     $error_message = ''
     $error_clixml_path = ''
     $result_clixml_path = Join-Path $test_results_dir pester-result.xml
@@ -248,8 +249,11 @@ function Build-CoverageReport {
         -mdFile $script:coverage_report_path -xslParams @{
             reportTitle = $script:coverage_report_title
         }
-
-    & "$PSScriptRoot/jacoco-report/embedmissedlines.ps1" -mdFile $script:coverage_report_path
+    Write-ActionInfo "Code coverage report path $script:coverage_report_path"
+    if (Test-Path $script:coverage_report_path) {
+        & "$PSScriptRoot/jacoco-report/embedmissedlines.ps1" -mdFile $script:coverage_report_path
+    } else {
+        Write-ActionWarning "Could not find Code coverage report path $script:coverage_report_path"
 }
 
 function Publish-ToCheckRun {
