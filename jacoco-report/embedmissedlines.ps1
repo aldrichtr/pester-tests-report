@@ -24,7 +24,8 @@ foreach ($line in $mdData) {
         Write-ActionInfo "Found $($workspaceFiles.Count) files"
         
         Write-ActionInfo "Looking for files with FullName like *$filePath"
-        $resolvedFilePath = $workspaceFiles | Where-Object {$_.FullName -like "*$filePath"}
+        # $resolvedFilePath = $workspaceFiles | Where-Object {$_.FullName -like "*$filePath"}
+        $resolvedFilePath = $workspaceFiles | Where-Object {$_.FullName -match [regex]::Escape($filePath)}
         
         if ($null -ne $resolvedFilePath) {
             $fileContents = Get-Content -Path $resolvedFilePath
