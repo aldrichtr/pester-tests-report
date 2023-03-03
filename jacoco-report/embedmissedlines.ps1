@@ -2,7 +2,10 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory)]
-    [string]$mdFile
+    [string]$mdFile,
+    
+    [Parameter()]
+    [string]$sourcePath
 )
 
 $mdData = Get-Content -Path $mdFile
@@ -21,11 +24,10 @@ foreach ($line in $mdData) {
         Write-ActionInfo "Looking for files in $env:GITHUB_WORKSPACE"
         
         $workspaceFiles = Get-ChildItem -Path "$env:GITHUB_WORKSPACE" -Recurse -File
-        Write-ActionInfo "Found $($workspaceFiles.Count) files"
         
         Write-ActionInfo "Looking for files with FullName like *$filePath"
         # $resolvedFilePath = $workspaceFiles | Where-Object {$_.FullName -like "*$filePath"}
-        $resolvedFilePath = $workspaceFiles | Where-Object {$_.FullName -match [regex]::Escape($filePath)}
+        $resolvedFilePath = (Join-Path $sourcePath $filePath)
         
         if ($null -ne $resolvedFilePath) {
             $fileContents = Get-Content -Path $resolvedFilePath
