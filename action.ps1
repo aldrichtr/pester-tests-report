@@ -251,7 +251,7 @@ function Build-CoverageReport {
         }
     Write-ActionInfo "Code coverage report path $script:coverage_report_path"
     if (Test-Path $script:coverage_report_path) {
-        & "$PSScriptRoot/jacoco-report/embedmissedlines.ps1" -mdFile $script:coverage_report_path -sourcePath $script:coverage_paths[0]
+        & "$PSScriptRoot/jacoco-report/embedmissedlines.ps1" -mdFile $script:coverage_report_path -sourcePath $script:coverage_paths
     } else {
         Write-ActionWarning "Could not find Code coverage report path $script:coverage_report_path"
     }
