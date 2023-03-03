@@ -142,7 +142,7 @@ else {
     $pesterConfig.TestResult.Enabled = $true
     $pesterConfig.TestResult.OutputPath = $test_results_path
 
-    Write-ActionOutput "Code Coverage Output Path $test_results_path"
+    Write-ActionInfo "Code Coverage Output Path $test_results_path"
     $error_message = ''
     $error_clixml_path = ''
     $result_clixml_path = Join-Path $test_results_dir pester-result.xml
